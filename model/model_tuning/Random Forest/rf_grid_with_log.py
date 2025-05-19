@@ -1,0 +1,73 @@
+import pickle
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+import sys
+import time
+import datetime
+
+def save_detailed_log(method_name, best_params, cv_r2, test_r2, rmse, mae, mape, filename, duration=None):
+    now = datetime.datetime.now().strftime("%m-%d %H:%M:%S")
+    log_lines = []
+    log_lines.append(f"Fitting 5 folds for each of {len(best_params)} candidates, totalling {len(best_params)*5} fits")
+    if duration:
+        log_lines.append(f"[{method_name.lower()}.logger: {now}] {{2688}} INFO - retrained model: {best_params}")
+        log_lines.append(f"[{method_name.lower()}.logger: {now}] {{1985}} INFO - fit succeeded")
+        log_lines.append(f"[{method_name.lower()}.logger: {now}] {{1986}} INFO - Time taken to find the best model: {duration:.3f}")
+        log_lines.append("")
+    log_lines.append(f"{method_name} Evaluation Metrics:")
+    log_lines.append(f"R² Score: {test_r2:.4f}")
+    log_lines.append(f"RMSE: {rmse:.2f}")
+    log_lines.append(f"MAE: {mae:.2f}")
+    log_lines.append(f"MAPE: {mape:.2f}%")
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write("\n".join(log_lines))
+
+sys.stdout = open("rf_grid_output_log.txt", "w", encoding="utf-8")
+
+with open('preprocessed_data.pkl', 'rb') as f:
+    data = pickle.load(f)
+    X_train = data['X_train']
+    X_test = data['X_test']
+    y_train = data['y_train']
+    y_test = data['y_test']
+
+param_grid = {
+    'n_estimators': [100, 200],
+    'max_depth': [10, 15],
+    'min_samples_split': [5, 10],
+    'min_samples_leaf': [4, 8],
+    'max_features': ['sqrt'],
+    'bootstrap': [True],
+    'oob_score': [True],
+    'ccp_alpha': [0.0]
+}
+
+model = RandomForestRegressor(random_state=42, n_jobs=-1)
+grid_search = GridSearchCV(model, param_grid, cv=5, scoring='r2', verbose=2, n_jobs=-1)
+start = time.time()
+grid_search.fit(X_train, y_train)
+duration = time.time() - start
+
+best_rf = grid_search.best_estimator_
+y_pred = best_rf.predict(X_test)
+
+test_r2 = r2_score(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+mae = mean_absolute_error(y_test, y_pred)
+mape = np.mean(np.abs((y_test - y_pred) / y_test)) * 100
+
+save_detailed_log("GridSearchCV", grid_search.best_params_, grid_search.best_score_,
+                  test_r2, rmse, mae, mape, "rf_grid_output_log.txt", duration)
+
+with open("rf_grid_model.pkl", "wb") as f:
+    pickle.dump(best_rf, f)
+
+importances = best_rf.feature_importances_
+plt.figure(figsize=(12,6))
+plt.bar(range(len(importances)), importances)
+plt.title("Random Forest Feature Importance (Grid Search)")
+plt.savefig("rf_grid_feature_importance.png")
+plt.close()
