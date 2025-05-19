@@ -1,0 +1,137 @@
+2025-05-19 15:00:39,043 - INFO - Reading data...
+2025-05-19 15:00:39,190 - INFO - Data shape: (15893, 56)
+2025-05-19 15:00:39,191 - INFO - 
+Splitting data...
+2025-05-19 15:00:39,199 - INFO - 
+Performing feature engineering...
+2025-05-19 15:00:39,200 - INFO - 
+Performing feature engineering...
+2025-05-19 15:00:39,228 - INFO - 
+Performing feature selection using F-regression...
+2025-05-19 15:00:39,231 - INFO - 
+Top 5 features selected by F-regression:
+2025-05-19 15:00:39,235 - INFO - 
+              Feature      F-Score        P-value
+11   Private Bathroom  3147.531154   0.000000e+00
+10     Share Bathroom  2279.886429   0.000000e+00
+5    Air-Conditioning   799.901755  1.029513e-170
+3       State_encoded   723.855458  4.098151e-155
+2   Room Type_encoded   714.454835  3.526031e-153
+2025-05-19 15:00:39,235 - INFO - Selected features: ['Private Bathroom' 'Share Bathroom' 'Air-Conditioning' 'State_encoded'
+ 'Room Type_encoded']
+2025-05-19 15:00:39,236 - INFO - Saving preprocessed data for model tuning...
+2025-05-19 15:00:39,238 - INFO - 
+Training and evaluating models...
+2025-05-19 15:00:39,238 - INFO - 
+Training Linear Regression...
+2025-05-19 15:00:39,249 - INFO - 
+Linear Regression Metrics:
+2025-05-19 15:00:39,249 - INFO - R2 Score: 0.3458
+2025-05-19 15:00:39,249 - INFO - RMSE: 224.60
+2025-05-19 15:00:39,249 - INFO - MAE: 145.27
+2025-05-19 15:00:39,249 - INFO - MAPE: 21.40%
+2025-05-19 15:00:39,249 - INFO - 
+Training Ridge Regression...
+2025-05-19 15:00:39,255 - INFO - 
+Ridge Regression Metrics:
+2025-05-19 15:00:39,255 - INFO - R2 Score: 0.3457
+2025-05-19 15:00:39,255 - INFO - RMSE: 224.60
+2025-05-19 15:00:39,255 - INFO - MAE: 145.27
+2025-05-19 15:00:39,255 - INFO - MAPE: 21.40%
+2025-05-19 15:00:39,255 - INFO - 
+Training Lasso Regression...
+2025-05-19 15:00:39,368 - INFO - 
+Lasso Regression Metrics:
+2025-05-19 15:00:39,369 - INFO - R2 Score: 0.3401
+2025-05-19 15:00:39,369 - INFO - RMSE: 225.58
+2025-05-19 15:00:39,369 - INFO - MAE: 145.08
+2025-05-19 15:00:39,369 - INFO - MAPE: 21.38%
+2025-05-19 15:00:39,369 - INFO - 
+Training ElasticNet...
+2025-05-19 15:00:39,388 - INFO - 
+ElasticNet Metrics:
+2025-05-19 15:00:39,388 - INFO - R2 Score: 0.2084
+2025-05-19 15:00:39,388 - INFO - RMSE: 247.06
+2025-05-19 15:00:39,388 - INFO - MAE: 158.54
+2025-05-19 15:00:39,388 - INFO - MAPE: 23.67%
+2025-05-19 15:00:39,388 - INFO - 
+Training Decision Tree...
+2025-05-19 15:00:39,476 - INFO - 
+Decision Tree Metrics:
+2025-05-19 15:00:39,476 - INFO - R2 Score: 0.4902
+2025-05-19 15:00:39,476 - INFO - RMSE: 198.26
+2025-05-19 15:00:39,476 - INFO - MAE: 109.92
+2025-05-19 15:00:39,476 - INFO - MAPE: 15.30%
+2025-05-19 15:00:39,476 - INFO - 
+Training Random Forest...
+2025-05-19 15:00:44,576 - INFO - 
+Random Forest Metrics:
+2025-05-19 15:00:44,576 - INFO - R2 Score: 0.7144
+2025-05-19 15:00:44,576 - INFO - RMSE: 148.39
+2025-05-19 15:00:44,576 - INFO - MAE: 89.92
+2025-05-19 15:00:44,576 - INFO - MAPE: 12.55%
+2025-05-19 15:00:44,576 - INFO - 
+Training Gradient Boosting...
+2025-05-19 15:00:46,038 - INFO - 
+Gradient Boosting Metrics:
+2025-05-19 15:00:46,038 - INFO - R2 Score: 0.6454
+2025-05-19 15:00:46,038 - INFO - RMSE: 165.36
+2025-05-19 15:00:46,038 - INFO - MAE: 109.20
+2025-05-19 15:00:46,038 - INFO - MAPE: 16.18%
+2025-05-19 15:00:46,039 - INFO - 
+Training XGBoost...
+2025-05-19 15:00:46,195 - INFO - 
+XGBoost Metrics:
+2025-05-19 15:00:46,195 - INFO - R2 Score: 0.7341
+2025-05-19 15:00:46,195 - INFO - RMSE: 143.18
+2025-05-19 15:00:46,195 - INFO - MAE: 91.56
+2025-05-19 15:00:46,195 - INFO - MAPE: 12.95%
+2025-05-19 15:00:46,195 - INFO - 
+Training LightGBM...
+2025-05-19 15:00:46,619 - INFO - 
+LightGBM Metrics:
+2025-05-19 15:00:46,619 - INFO - R2 Score: 0.7151
+2025-05-19 15:00:46,619 - INFO - RMSE: 148.22
+2025-05-19 15:00:46,619 - INFO - MAE: 96.90
+2025-05-19 15:00:46,619 - INFO - MAPE: 13.82%
+2025-05-19 15:00:46,619 - INFO - 
+Training SVR...
+2025-05-19 15:00:52,853 - INFO - 
+SVR Metrics:
+2025-05-19 15:00:52,854 - INFO - R2 Score: 0.0019
+2025-05-19 15:00:52,854 - INFO - RMSE: 277.42
+2025-05-19 15:00:52,854 - INFO - MAE: 191.10
+2025-05-19 15:00:52,854 - INFO - MAPE: 27.48%
+2025-05-19 15:00:52,854 - INFO - 
+Training Neural Network...
+2025-05-19 15:01:03,211 - INFO - 
+Neural Network Metrics:
+2025-05-19 15:01:03,211 - INFO - R2 Score: 0.5401
+2025-05-19 15:01:03,211 - INFO - RMSE: 188.31
+2025-05-19 15:01:03,211 - INFO - MAE: 124.28
+2025-05-19 15:01:03,211 - INFO - MAPE: 18.35%
+2025-05-19 15:01:03,212 - INFO - 
+Model Comparison:
+2025-05-19 15:01:03,216 - INFO - 
+                Model  R2 Score        RMSE         MAE       MAPE
+7             XGBoost  0.734114  143.182774   91.555726  12.945104
+8            LightGBM  0.715066  148.222693   96.895435  13.817626
+5       Random Forest  0.714412  148.392903   89.915828  12.553590
+6   Gradient Boosting  0.645353  165.364019  109.200800  16.184506
+10     Neural Network  0.540110  188.308338  124.277395  18.353079
+4       Decision Tree  0.490197  198.264063  109.921380  15.299191
+0   Linear Regression  0.345769  224.599295  145.265222  21.400305
+1    Ridge Regression  0.345740  224.604324  145.265656  21.400629
+2    Lasso Regression  0.340060  225.577071  145.078194  21.382008
+3          ElasticNet  0.208386  247.058318  158.541918  23.665858
+9                 SVR  0.001857  277.420920  191.095376  27.480568
+2025-05-19 15:01:03,371 - INFO - 
+Creating visualizations...
+2025-05-19 15:01:04,957 - INFO - 
+Saving the best model (XGBoost)...
+2025-05-19 15:01:04,959 - INFO - 
+Top 3 models for tuning: ['XGBoost' 'LightGBM' 'Random Forest']
+2025-05-19 15:01:04,959 - INFO - To tune these models, please run model_tuning.py
+2025-05-19 15:01:04,959 - INFO - 
+Modeling complete! Results have been saved.
+2025-05-19 15:01:04,959 - INFO - Detailed log saved to room_price_modeling_20250519_150039.log
