@@ -11,7 +11,6 @@ from contextlib import redirect_stdout
 
 with open('grid_output_log.txt', 'w', encoding='utf-8') as log_file:
     with redirect_stdout(log_file):
-        # 加载数据
         with open('preprocessed_data.pkl', 'rb') as f:
             data = pickle.load(f)
             X_train = data['X_train']
@@ -51,7 +50,7 @@ with open('grid_output_log.txt', 'w', encoding='utf-8') as log_file:
             scoring='r2',
             cv=3,
             verbose=2,
-            n_jobs=1  # 单线程确保日志捕获
+            n_jobs=1 
         )
 
         grid.fit(X_train, y_train)
