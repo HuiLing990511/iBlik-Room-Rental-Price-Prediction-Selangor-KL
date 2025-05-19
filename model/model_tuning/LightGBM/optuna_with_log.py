@@ -90,7 +90,6 @@ plt.show()
 with open("lgbm_optuna_final_fixed_model.pkl", "wb") as f:
     pickle.dump(final_model, f)
 
-# 将最终评估指标附加写入日志文件
 with open("optuna_output_log.txt", "a", encoding="utf-8") as f_log:
     f_log.write("\nFinal Evaluation:\n")
     f_log.write(f"R² Score: {r2:.4f}\n")
