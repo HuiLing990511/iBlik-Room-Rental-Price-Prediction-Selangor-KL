@@ -1,4 +1,3 @@
-
 import sys
 import pandas as pd
 import numpy as np
@@ -12,7 +11,6 @@ from contextlib import redirect_stdout
 
 with open('random_output_log.txt', 'w', encoding='utf-8') as log_file:
     with redirect_stdout(log_file):
-        # 加载数据
         with open('preprocessed_data.pkl', 'rb') as f:
             data = pickle.load(f)
             X_train = data['X_train']
@@ -32,7 +30,6 @@ with open('random_output_log.txt', 'w', encoding='utf-8') as log_file:
             print(f"MAPE: {mape:.2f}%")
             return r2, rmse, mae, mape
 
-        # 参数空间
         param_dist = {
             'learning_rate': uniform(0.01, 0.09),
             'max_depth': randint(4, 10),
@@ -55,7 +52,7 @@ with open('random_output_log.txt', 'w', encoding='utf-8') as log_file:
             cv=5,
             verbose=2,
             random_state=42,
-            n_jobs=1  # 避免多进程导致日志丢失
+            n_jobs=1  
         )
 
         random_search.fit(X_train, y_train)
