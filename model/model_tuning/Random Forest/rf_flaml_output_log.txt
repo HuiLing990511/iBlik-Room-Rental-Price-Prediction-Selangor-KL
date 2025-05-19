@@ -1,0 +1,9 @@
+[flaml.automl.logger] INFO - Best config: {'n_estimators': 866, 'max_features': np.float64(0.36333154031469933), 'max_leaves': 2555}
+[flaml.automl.logger] INFO - Best loss: 0.3105138592080133
+[flaml.automl.logger] INFO - Time taken to find the best model: 321.271
+
+FLAML RF Evaluation Metrics:
+R² Score: 0.7375
+RMSE: 142.28
+MAE: 88.70
+MAPE: 12.53%
