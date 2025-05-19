@@ -1,4 +1,0 @@
-Model,R2 Score,RMSE,MAPE,MAE,Best Parameters,Tuning Time (s)
-Tuned Random Forest,0.7184364228142293,147.3435189966246,13.090830987991705,92.12674120080551,"{'bootstrap': True, 'ccp_alpha': 0.01, 'max_depth': 20, 'max_features': 0.7, 'min_samples_leaf': 4, 'min_samples_split': 5, 'n_estimators': 200, 'oob_score': True}",5744.764533042908
-Tuned XGBoost,0.7495940327644348,138.952105057822,12.006005498731367,85.84678317271302,"{'subsample': 0.8, 'reg_lambda': 2, 'reg_alpha': 0.5, 'n_estimators': 300, 'min_child_weight': 1, 'max_depth': 8, 'learning_rate': 0.1, 'gamma': 0.2, 'colsample_bytree': 0.8}",7.338022947311401
-Tuned LightGBM,0.725661526480327,145.44076817312623,13.725728835587296,95.11509696458583,"{'subsample': 1.0, 'reg_lambda': 0.1, 'reg_alpha': 0.5, 'num_leaves': 31, 'n_estimators': 300, 'min_child_weight': 0.01, 'min_child_samples': 20, 'max_depth': 9, 'learning_rate': 0.05}",45.847050189971924
