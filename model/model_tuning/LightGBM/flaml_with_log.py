@@ -9,7 +9,6 @@ from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 from flaml import AutoML
 
-# 加载预处理数据
 with open('preprocessed_data.pkl', 'rb') as f:
     data = pickle.load(f)
     X_train = data['X_train']
@@ -30,7 +29,6 @@ def evaluate_all(y_true, y_pred, name="FLAML"):
     print(f"MAPE: {mape:.2f}%")
     return r2, rmse, mae, mape
 
-# 初始化 FLAML
 automl = AutoML()
 
 settings = {
@@ -43,11 +41,9 @@ settings = {
 
 automl.fit(X_train=X_train, y_train=y_train, **settings)
 
-# 预测与评估
 y_pred = automl.predict(X_test)
 r2, rmse, mae, mape = r2, rmse, mae, mape = evaluate_all(y_test, y_pred, "LGBM FLAML")
 
-# 特征重要性可视化（如果支持）
 try:
     import lightgbm as lgb
     booster = automl.model.estimator.booster_
@@ -59,11 +55,9 @@ try:
 except Exception as e:
     print("Feature importance plot skipped:", e)
 
-# 保存模型
 with open("lgbm_flaml_model.pkl", "wb") as f:
     pickle.dump(automl, f)
 
-# 将最终评估指标附加写入同一日志文件
 with open("flaml_output_log.txt", "a", encoding="utf-8") as f_log:
     f_log.write("\nFinal Evaluation:\n")
     f_log.write(f"R² Score: {r2:.4f}\n")
