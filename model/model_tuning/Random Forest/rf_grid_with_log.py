@@ -76,7 +76,6 @@ plt.xlabel("Feature importance")
 plt.ylabel("Features")
 plt.title("Random Forest Feature Importance (Grid Search)")
 
-# 添加数值标签
 for i, bar in enumerate(bars):
     width = bar.get_width()
     plt.text(width + 0.002, bar.get_y() + bar.get_height()/2,
