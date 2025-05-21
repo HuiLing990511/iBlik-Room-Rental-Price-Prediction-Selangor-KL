@@ -1,10 +1,10 @@
 Fitting 5 folds for each of 50 candidates, totalling 250 fits
  model: {'oob_score': True, 'n_estimators': 500, 'min_samples_split': 5, 'min_samples_leaf': 2, 'max_features': 0.7, 'max_depth': 20, 'ccp_alpha': 0.001, 'bootstrap': True}
-[randomsearchcv.logger: 05-19 20:03:49] {1985} INFO - fit succeeded
-[randomsearchcv.logger: 05-19 20:03:49] {1986} INFO - Time taken to find the best model: 167.278
+[randomsearchcv.logger: 05-21 17:27:10] {1985} INFO - fit succeeded
+[randomsearchcv.logger: 05-21 17:27:10] {1986} INFO - Time taken to find the best model: 172.652
 
 RandomSearchCV Evaluation Metrics:
-R² Score: 0.7315
-RMSE: 143.89
-MAE: 89.25
-MAPE: 12.57%
+R² Score: 0.7330
+RMSE: 143.48
+MAE: 89.47
+MAPE: 12.56%
