@@ -66,8 +66,22 @@ with open("rf_grid_model.pkl", "wb") as f:
     pickle.dump(best_rf, f)
 
 importances = best_rf.feature_importances_
-plt.figure(figsize=(12,6))
-plt.bar(range(len(importances)), importances)
+feature_names = X_train.columns if hasattr(X_train, 'columns') else [f"Feature {{i}}" for i in range(X_train.shape[1])]
+sorted_idx = np.argsort(importances)
+
+plt.figure(figsize=(8, 6))
+bars = plt.barh(range(len(importances)), np.array(importances)[sorted_idx], align='center')
+plt.yticks(range(len(importances)), np.array(feature_names)[sorted_idx])
+plt.xlabel("Feature importance")
+plt.ylabel("Features")
 plt.title("Random Forest Feature Importance (Grid Search)")
+
+# 添加数值标签
+for i, bar in enumerate(bars):
+    width = bar.get_width()
+    plt.text(width + 0.002, bar.get_y() + bar.get_height()/2,
+             f"{width:.3f}", va='center', fontsize=8)
+
+plt.tight_layout()
 plt.savefig("rf_grid_feature_importance.png")
-plt.close()
+plt.show()

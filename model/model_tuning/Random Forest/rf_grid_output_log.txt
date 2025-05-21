@@ -1,10 +1,10 @@
 Fitting 5 folds for each of 16 candidates, totalling 80 fits
-gridsearchcv.logger: 05-19 20:31:45] {2688} INFO - retrained model: {'bootstrap': True, 'ccp_alpha': 0.0, 'max_depth': 15, 'max_features': 'sqrt', 'min_samples_leaf': 4, 'min_samples_split': 5, 'n_estimators': 100, 'oob_score': True}
-[gridsearchcv.logger: 05-19 20:31:45] {1985} INFO - fit succeeded
-[gridsearchcv.logger: 05-19 20:31:45] {1986} INFO - Time taken to find the best model: 25.877
+gridsearchcv.logger: 05-21 17:15:05] {2688} INFO - retrained model: {'bootstrap': True, 'ccp_alpha': 0.0, 'max_depth': 15, 'max_features': 'sqrt', 'min_samples_leaf': 4, 'min_samples_split': 5, 'n_estimators': 200, 'oob_score': True}
+[gridsearchcv.logger: 05-21 17:15:05] {1985} INFO - fit succeeded
+[gridsearchcv.logger: 05-21 17:15:05] {1986} INFO - Time taken to find the best model: 24.138
 
 GridSearchCV Evaluation Metrics:
-R² Score: 0.6564
-RMSE: 162.76
-MAE: 101.99
-MAPE: 14.69%
+R² Score: 0.6533
+RMSE: 163.51
+MAE: 103.07
+MAPE: 14.78%
