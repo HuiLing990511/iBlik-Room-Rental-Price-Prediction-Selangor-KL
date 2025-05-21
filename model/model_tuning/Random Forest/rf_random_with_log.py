@@ -9,7 +9,6 @@ import sys
 import time
 import datetime
 
-# === FLAML style logging ===
 def save_detailed_log(method_name, best_params, cv_r2, test_r2, rmse, mae, mape, filename, duration=None):
     now = datetime.datetime.now().strftime("%m-%d %H:%M:%S")
     log_lines = []
@@ -29,10 +28,8 @@ def save_detailed_log(method_name, best_params, cv_r2, test_r2, rmse, mae, mape,
     with open(filename, "w", encoding="utf-8") as f:
         f.write("\n".join(log_lines))
 
-# 输出 log 到 txt 文件
 sys.stdout = open("rf_random_output_log.txt", "w", encoding="utf-8")
 
-# 加载数据
 with open('preprocessed_data.pkl', 'rb') as f:
     data = pickle.load(f)
     X_train = data['X_train']
@@ -40,7 +37,6 @@ with open('preprocessed_data.pkl', 'rb') as f:
     y_train = data['y_train']
     y_test = data['y_test']
 
-# 随机搜索参数网格
 param_dist = {
     'n_estimators': [100, 200, 300, 400, 500],
     'max_depth': [10, 15, 20, 25, 30],
@@ -52,7 +48,6 @@ param_dist = {
     'ccp_alpha': [0.0, 0.001, 0.01]
 }
 
-# 建模并调参
 model = RandomForestRegressor(random_state=42, n_jobs=-1)
 random_search = RandomizedSearchCV(model, param_dist, n_iter=50, cv=5, scoring='r2', verbose=2, n_jobs=-1, random_state=42)
 
@@ -60,7 +55,6 @@ start = time.time()
 random_search.fit(X_train, y_train)
 duration = time.time() - start
 
-# 获取最佳模型与评估结果
 best_rf = random_search.best_estimator_
 y_pred = best_rf.predict(X_test)
 
@@ -69,15 +63,12 @@ rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 mae = mean_absolute_error(y_test, y_pred)
 mape = np.mean(np.abs((y_test - y_pred) / y_test)) * 100
 
-# 保存 FLAML 风格日志
 save_detailed_log("RandomSearchCV", random_search.best_params_, random_search.best_score_,
                   test_r2, rmse, mae, mape, "rf_random_output_log.txt", duration)
 
-# 保存模型
 with open("rf_random_model.pkl", "wb") as f:
     pickle.dump(best_rf, f)
 
-# 输出特征重要性图
 importances = best_rf.feature_importances_
 feature_names = X_train.columns if hasattr(X_train, 'columns') else [f"Feature {{i}}" for i in range(X_train.shape[1])]
 sorted_idx = np.argsort(importances)
@@ -89,7 +80,6 @@ plt.xlabel("Feature importance")
 plt.ylabel("Features")
 plt.title("Random Forest Feature Importance (Randomized Search)")
 
-# 添加数值标签
 for i, bar in enumerate(bars):
     width = bar.get_width()
     plt.text(width + 0.002, bar.get_y() + bar.get_height()/2,
