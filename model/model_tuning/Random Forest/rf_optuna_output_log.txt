@@ -1,9 +1,9 @@
-[optuna.logger: 05-19 20:23:53] {2688} INFO - retrained model: {'n_estimators': 350, 'max_depth': 25, 'min_samples_split': 4, 'min_samples_leaf': 1, 'max_features': 0.7, 'bootstrap': True, 'oob_score': True, 'ccp_alpha': 0.005238904226436627}
-[optuna.logger: 05-19 20:23:53] {1985} INFO - fit succeeded
-[optuna.logger: 05-19 20:23:53] {1986} INFO - Time taken to find the best model: 281.067
+[optuna.logger: 05-21 17:36:10] {2688} INFO - retrained model: {'n_estimators': 300, 'max_depth': 30, 'min_samples_split': 4, 'min_samples_leaf': 1, 'max_features': 0.7, 'bootstrap': True, 'oob_score': False, 'ccp_alpha': 0.009934994860073616}
+[optuna.logger: 05-21 17:36:10] {1985} INFO - fit succeeded
+[optuna.logger: 05-21 17:36:10] {1986} INFO - Time taken to find the best model: 412.583
 
 Optuna Evaluation Metrics:
-R² Score: 0.7313
-RMSE: 143.95
-MAE: 88.26
-MAPE: 12.39%
+R² Score: 0.7347
+RMSE: 143.02
+MAE: 88.47
+MAPE: 12.36%
