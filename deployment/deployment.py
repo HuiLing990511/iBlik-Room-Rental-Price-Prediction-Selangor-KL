@@ -1,10 +1,11 @@
 import streamlit as st
 import pandas as pd
 import pickle
+import warnings
 
 @st.cache_data
 def load_location_data():
-    df = pd.read_csv('cleaned_with_count.csv')
+    df = pd.read_csv('dataset/cleaned_with_count.csv')
 
     location_mapping = {}
     location_display_list = []
@@ -29,7 +30,8 @@ def load_location_data():
 
 @st.cache_resource
 def load_model_assets():
-    with open('best_model.pkl', 'rb') as f1, open('deployment_assets.pkl', 'rb') as f2:
+    warnings.filterwarnings("ignore", message=".*model_persistence.html.*")
+    with open('model/models/models_result/best_model.pkl', 'rb') as f1, open('deployment/deployment_assets.pkl', 'rb') as f2:
         model = pickle.load(f1)
         assets = pickle.load(f2)
     return model, assets
