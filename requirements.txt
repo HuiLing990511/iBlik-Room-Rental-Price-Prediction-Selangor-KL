@@ -1,5 +1,5 @@
 streamlit
 pandas
-warnings
-scikit-learn
 xgboost
+scikit-learn
+numpy
