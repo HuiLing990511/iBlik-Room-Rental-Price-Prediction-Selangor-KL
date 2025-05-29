@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import pickle
 import warnings
-from math import radians, sin, cos, sqrt, atan2
 
 @st.cache_data
 def load_location_data():
