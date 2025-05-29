@@ -2,5 +2,5 @@ streamlit
 pandas
 pickle
 warnings
-scikit-learn==1.5.1
+scikit-learn
 xgboost
