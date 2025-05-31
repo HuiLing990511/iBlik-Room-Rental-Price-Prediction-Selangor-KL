@@ -38,7 +38,7 @@ def get_nearby_similar_locations(df, selected_lat, selected_lng, predicted_price
     upper_bound = predicted_price * (1 + price_margin)
 
     for _, row in df.iterrows():
-        row_price = row['Rental Price']
+        row_price = row['Price']
         if lower_bound <= row_price <= upper_bound:
             dist = geodesic((selected_lat, selected_lng), (row['Latitude'], row['Longitude'])).km
             if dist <= max_distance_km:
