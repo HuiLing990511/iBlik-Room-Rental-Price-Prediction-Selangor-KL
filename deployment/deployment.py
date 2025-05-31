@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 import pickle
 import warnings
+import folium
+from streamlit_folium import st_folium
+from geopy.distance import geodesic
 
 @st.cache_data
 def load_location_data():
@@ -27,6 +30,26 @@ def load_location_data():
     
     unique_locations = sorted(location_display_list)
     return location_mapping, unique_locations
+
+def get_nearby_similar_locations(df, selected_lat, selected_lng, predicted_price, price_margin=0.05, max_distance_km=2):
+    similar_locations = []
+
+    lower_bound = predicted_price * (1 - price_margin)
+    upper_bound = predicted_price * (1 + price_margin)
+
+    for _, row in df.iterrows():
+        row_price = row['Rental Price']
+        if lower_bound <= row_price <= upper_bound:
+            dist = geodesic((selected_lat, selected_lng), (row['Latitude'], row['Longitude'])).km
+            if dist <= max_distance_km:
+                similar_locations.append({
+                    "Location Detail": row['Location Detail'],
+                    "Price": row_price,
+                    "Latitude": row['Latitude'],
+                    "Longitude": row['Longitude']
+                })
+
+    return similar_locations
 
 @st.cache_resource
 def load_model_assets():
@@ -218,6 +241,41 @@ def render_prediction(location_mapping, assets, model):
         st.subheader("Prediction Result")
         st.markdown(st.session_state.prediction_message) # Use markdown for formatting (e.g., bold)
         st.divider()
+
+            # Load original dataset for reference
+        df_all = pd.read_csv("dataset/cleaned_with_count.csv")
+
+        # Get user selected location coordinates
+        selected_lat = user_data["Latitude"]
+        selected_lng = user_data["Longitude"]
+
+        similar_places = get_nearby_similar_locations(
+            df_all, selected_lat, selected_lng, predicted_price[0]
+        )
+
+        if similar_places:
+            st.subheader("Map of Nearby Similar Listings")
+            m = folium.Map(location=[selected_lat, selected_lng], zoom_start=14)
+
+            # Add marker for selected location
+            folium.Marker(
+                [selected_lat, selected_lng],
+                popup="Selected Location",
+                icon=folium.Icon(color="blue")
+            ).add_to(m)
+
+            # Add markers for similar listings
+            for place in similar_places:
+                folium.Marker(
+                    [place["Latitude"], place["Longitude"]],
+                    popup=f"{place['Location Detail']} (RM {place['Price']:.2f})",
+                    icon=folium.Icon(color="green")
+                ).add_to(m)
+
+            st_folium(m, width=700, height=500)
+        else:
+            st.info("No similar listings found within 2 km and ±5% price range.")
+
 
 # def render_prediction():
 #     def on_click():
