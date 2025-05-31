@@ -79,7 +79,7 @@ def preprocess_user_input(user_data, assets):
 
 # --- Creating Streamlit APP ---
 def render_title():
-    st.write(" 🏠Room Rental Price Prediction")
+    st.title(" 🏠Room Rental Price Prediction")
  
 def session_state_initialization_literal(literal, value):
     if literal not in st.session_state:
@@ -233,7 +233,7 @@ def render_prediction(location_mapping, assets, model):
 
     # --- 3. Display Phase (controlled by session state) ---
     if st.session_state.get('is_predict_visible', False):
-        st.subheader("Prediction Result")
+        st.subheader("Predicted Rental Price")
         st.write("Based on the provided information, the predicted rental price is:")
         st.subheader(st.session_state.prediction_message) # Use markdown for formatting (e.g., bold)
         st.divider()
@@ -252,7 +252,7 @@ def render_prediction(location_mapping, assets, model):
         similar_places = get_nearby_similar_locations(df_all, selected_lat, selected_lng, predicted_price)
 
         if similar_places:
-            st.subheader("Similar Listings Nearby (2 km and ±5% price range)")
+            st.subheader("Similar Room Rental Listings Nearby (2 km and ±5% of predicted price range)")
             m = folium.Map(location=[selected_lat, selected_lng], zoom_start=14)
 
             # Add marker for selected location
