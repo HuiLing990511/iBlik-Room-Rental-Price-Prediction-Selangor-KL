@@ -255,23 +255,6 @@ def render_prediction(location_mapping, assets, model):
             st.subheader("Similar Room Rental Listings Nearby (2 km and ±5% of predicted price range)")
             m = folium.Map(location=[selected_lat, selected_lng], zoom_start=14)
 
-            # Add marker for selected location
-            folium.Marker(
-                [selected_lat, selected_lng],
-                popup="Selected Location",
-                icon=folium.Icon(color="blue")
-            ).add_to(m)
-
-            # Add markers for similar listings
-            for place in similar_places:
-                folium.Marker(
-                    [place["Latitude"], place["Longitude"]],
-                    popup=f"{place['Location Detail']} (RM {place['Price']:.2f})",
-                    icon=folium.Icon(color="green")
-                ).add_to(m)
-
-            st_folium(m, width=700, height=500)
-
             # Add marker for selected location (predicted location)
             folium.Marker(
                 [selected_lat, selected_lng],
@@ -279,7 +262,7 @@ def render_prediction(location_mapping, assets, model):
                 tooltip=f"Predicted Price: RM {predicted_price:.2f}",
                 icon=folium.Icon(color="blue")
             ).add_to(m)
-
+            
             # Add markers for similar listings
             for place in similar_places:
                 folium.Marker(
