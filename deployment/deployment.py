@@ -255,9 +255,7 @@ def render_prediction(location_mapping, assets, model):
             selected_lat = user_data["Latitude"]
             selected_lng = user_data["Longitude"]
 
-        similar_places = get_nearby_similar_locations(
-            df_all, selected_lat, selected_lng, predicted_price[0]
-        )
+        similar_places = get_nearby_similar_locations(df_all, selected_lat, selected_lng, predicted_price)
 
         if similar_places:
             st.subheader("Map of Nearby Similar Listings")
