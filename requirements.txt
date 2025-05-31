@@ -3,3 +3,6 @@ pandas
 xgboost
 scikit-learn
 numpy
+folium
+streamlit_folium
+geopy
