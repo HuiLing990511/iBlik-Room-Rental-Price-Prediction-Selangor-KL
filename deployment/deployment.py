@@ -79,7 +79,7 @@ def preprocess_user_input(user_data, assets):
 
 # --- Creating Streamlit APP ---
 def render_title():
-    st.write("# Room Rental Price Prediction")
+    st.write(" 🏠Room Rental Price Prediction")
  
 def session_state_initialization_literal(literal, value):
     if literal not in st.session_state:
@@ -223,17 +223,10 @@ def render_prediction(location_mapping, assets, model):
             preprocessed_input = preprocess_user_input(user_data, assets)
 
             # Call your actual prediction model/logic here
-            predicted_price = model.predict(preprocessed_input) # Replace with your model call
+            predicted_price = model.predict(preprocessed_input) 
 
             # Store the formatted prediction message
-            st.session_state.prediction_message = f"""
-            Based on the provided information, the predicted rental price is **RM{predicted_price[0]:.2f}**.
-
-            This prediction is based on the current market trends and the characteristics of the room.
-            For more accurate predictions, please consult a real estate professional or use a dedicated property rental platform.
-
-            Thank you for using our Room Rental Price Prediction tool!
-            """
+            st.session_state.prediction_message = f"RM{predicted_price[0]:.2f}"
             st.session_state.is_predict_visible = True # Make prediction section visible
             st.session_state.user_data = user_data
             st.session_state.predicted_price = predicted_price[0]
@@ -241,7 +234,8 @@ def render_prediction(location_mapping, assets, model):
     # --- 3. Display Phase (controlled by session state) ---
     if st.session_state.get('is_predict_visible', False):
         st.subheader("Prediction Result")
-        st.markdown(st.session_state.prediction_message) # Use markdown for formatting (e.g., bold)
+        st.write("Based on the provided information, the predicted rental price is:")
+        st.subheader(st.session_state.prediction_message) # Use markdown for formatting (e.g., bold)
         st.divider()
 
             # Load original dataset for reference
@@ -258,7 +252,7 @@ def render_prediction(location_mapping, assets, model):
         similar_places = get_nearby_similar_locations(df_all, selected_lat, selected_lng, predicted_price)
 
         if similar_places:
-            st.subheader("Map of Nearby Similar Listings")
+            st.subheader("Similar Listings Nearby (2 km and ±5% price range)")
             m = folium.Map(location=[selected_lat, selected_lng], zoom_start=14)
 
             # Add marker for selected location
@@ -279,6 +273,12 @@ def render_prediction(location_mapping, assets, model):
             st_folium(m, width=700, height=500)
         else:
             st.info("No similar listings found within 2 km and ±5% price range.")
+
+    st.write("""
+            This prediction is based on the current market trends and the characteristics of the room.
+            For more accurate predictions, please consult a real estate professional or use a dedicated property rental platform.
+            Thank you for using our Room Rental Price Prediction tool!
+             """)
 
 
 # def render_prediction():
