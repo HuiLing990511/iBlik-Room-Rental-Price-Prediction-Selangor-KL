@@ -271,6 +271,23 @@ def render_prediction(location_mapping, assets, model):
                 ).add_to(m)
 
             st_folium(m, width=700, height=500)
+
+            # Add marker for selected location (predicted location)
+            folium.Marker(
+                [selected_lat, selected_lng],
+                popup="Selected Location",
+                tooltip=f"Predicted Price: RM {predicted_price:.2f}",
+                icon=folium.Icon(color="blue")
+            ).add_to(m)
+
+            # Add markers for similar listings
+            for place in similar_places:
+                folium.Marker(
+                    [place["Latitude"], place["Longitude"]],
+                    popup=f"{place['Location Detail']}<br>RM {place['Price']:.2f}",
+                    tooltip=f"{place['Location Detail']} - RM {place['Price']:.2f}",
+                    icon=folium.Icon(color="green")
+                ).add_to(m)
         else:
             st.info("No similar listings found within 2 km and ±5% price range.")
 
