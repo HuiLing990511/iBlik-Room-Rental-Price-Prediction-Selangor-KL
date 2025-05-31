@@ -235,6 +235,8 @@ def render_prediction(location_mapping, assets, model):
             Thank you for using our Room Rental Price Prediction tool!
             """
             st.session_state.is_predict_visible = True # Make prediction section visible
+            st.session_state.user_data = user_data
+            st.session_state.predicted_price = predicted_price[0]
 
     # --- 3. Display Phase (controlled by session state) ---
     if st.session_state.get('is_predict_visible', False):
@@ -245,9 +247,13 @@ def render_prediction(location_mapping, assets, model):
             # Load original dataset for reference
         df_all = pd.read_csv("dataset/cleaned_with_count.csv")
 
-        # Get user selected location coordinates
-        selected_lat = user_data["Latitude"]
-        selected_lng = user_data["Longitude"]
+        # Retrieve user data from session
+        user_data = st.session_state.get("user_data")
+        predicted_price = st.session_state.get("predicted_price")
+
+        if user_data is not None and predicted_price is not None:
+            selected_lat = user_data["Latitude"]
+            selected_lng = user_data["Longitude"]
 
         similar_places = get_nearby_similar_locations(
             df_all, selected_lat, selected_lng, predicted_price[0]
