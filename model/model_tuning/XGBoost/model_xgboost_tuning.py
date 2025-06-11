@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 import pandas as pd
 import xgboost as xgb
-from sklearn.model_selection import RandomizedSearchCV
+from sklearn.model_selection import RandomizedSearchCV, cross_val_score, ParameterGrid
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -19,7 +19,7 @@ y_train = data['y_train']
 X_test = data['X_test']
 y_test = data['y_test']
 
-output_dir = 'xgboost_models_result'
+output_dir = 'xgboost_models_result1'
 os.makedirs(output_dir, exist_ok=True)
 
 def plot_feature_importance(model, feature_names, method_name):
@@ -78,10 +78,9 @@ def bayesian_optimization_tuning(X_train, y_train, X_test, y_test, feature_names
             'objective': 'reg:squarederror'
         }
         model = xgb.XGBRegressor(**params)
-        model.fit(X_train, y_train)
-        preds = model.predict(X_test)
-        rmse = np.sqrt(mean_squared_error(y_test, preds))
-        return rmse
+        # 只用训练集做交叉验证
+        scores = cross_val_score(model, X_train, y_train, cv=3, scoring='neg_root_mean_squared_error', n_jobs=-1)
+        return -np.mean(scores)
     space = {
         'n_estimators': hp.quniform('n_estimators', 100, 1000, 100),
         'max_depth': hp.quniform('max_depth', 3, 15, 1),
@@ -115,8 +114,6 @@ def bayesian_optimization_tuning(X_train, y_train, X_test, y_test, feature_names
 
 def xgb_cv_grid_search_tuning(X_train, y_train, X_test, y_test, feature_names):
     print("Running xgb.cv + grid search tuning...")
-
-    from sklearn.model_selection import ParameterGrid
 
     param_grid = {
         'max_depth': [3, 5, 7],
@@ -183,10 +180,9 @@ def optuna_tuning(X_train, y_train, X_test, y_test, feature_names):
             'verbosity': 0
         }
         model = xgb.XGBRegressor(**params)
-        model.fit(X_train, y_train)
-        preds = model.predict(X_test)
-        rmse = np.sqrt(mean_squared_error(y_test, preds))
-        return rmse
+        # 只用训练集做交叉验证
+        scores = cross_val_score(model, X_train, y_train, cv=3, scoring='neg_root_mean_squared_error', n_jobs=-1)
+        return -np.mean(scores)
 
     study = optuna.create_study(direction='minimize')
     study.optimize(objective, n_trials=50, show_progress_bar=True)
